@@ -24,7 +24,8 @@ buc8xM_des:         ld.bu r15, r20, r10
                     st.b r15, r21, r11
                     addu r11, r11, 1
                     addu r10, r10, 1
-                    subu r8, r8, 1     
+                    subu r8, r8, 1
+                    br buc8xM_des     
 
 buc_byte:         jmp(r1)  
      

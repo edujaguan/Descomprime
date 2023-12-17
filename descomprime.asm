@@ -8,9 +8,24 @@ Descomprime:        ld r20, r30, 0 ;cargamos en r20 el puntero a com
                     ld.bu r29, r20, 0 ;primer byte de la cabecera
                     ld.bu r15, r20, 1 ;segundo byte de la cabecera 
                     mulu r15, r15, 256 ;desplazamos r15
-                    or r29, r29, r15
-                    
-buc8xM:         
+                    or r29, r29, r15 ;r29 <-- priemros 2 bytes de la cabecera
 
-buc_byte:       
-fin:            
+                    ld.bu r15, r20, 2 ; M
+                    mulu r8, r15, 8 ;8xM
+
+
+                    ld.bu r13, r20, 3
+                    ld.bu r14, r20, 4
+                    mulu r14, r14, 256
+                    or r10, r13, r14 ;r10 es el offset de la cadena com
+
+buc8xM_des:         ld.bu r15, r20, r10
+                    cmp  r5, r8, 0
+                    bb1 eq, r5, buc_byte
+                    st.b r15, r21, r11
+                    addu r11, r11, 1
+                    addu r10, r10, 1
+                    subu r8, r8, 1     
+
+buc_byte:         jmp(r1)  
+     
